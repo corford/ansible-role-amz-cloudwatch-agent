@@ -1,5 +1,5 @@
 ---
 - name: CloudWatch Agent | Installing from deb
   apt:
-    deb: "{{ aws_cw_agent_pkg_path }}"
+    deb: "{{ amz_cwagent_pkg_path }}"
     allow_unauthenticated: yes

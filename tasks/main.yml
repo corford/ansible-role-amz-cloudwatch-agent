@@ -8,25 +8,25 @@
 
 - name: AWS CloudWatch Agent | Set dependencies
   set_fact:
-    aws_cw_agent_dependencies: "{{ __aws_cw_agent_dependencies }}"
-  when: aws_cw_agent_dependencies is not defined
+    amz_cwagent_dependencies: "{{ __amz_cwagent_dependencies }}"
+  when: amz_cwagent_dependencies is not defined
   tags: aws_cw_agent
 
 - name: AWS CloudWatch Agent | Set signature URL
   set_fact:
-    aws_cw_agent_sig_url: "{{ __aws_cw_agent_sig_url }}"
-  when: aws_cw_agent_sig_url is not defined
+    amz_cwagent_sig_url: "{{ __amz_cwagent_sig_url }}"
+  when: amz_cwagent_sig_url is not defined
   tags: aws_cw_agent
 
 - name: AWS CloudWatch Agent | Set package URL
   set_fact:
-    aws_cw_agent_pkg_url: "{{ __aws_cw_agent_pkg_url }}"
-  when: aws_cw_agent_pkg_url is not defined
+    amz_cwagent_pkg_url: "{{ __amz_cwagent_pkg_url }}"
+  when: amz_cwagent_pkg_url is not defined
   tags: aws_cw_agent
 
 - name: AWS CloudWatch Agent | Ensure dependencies are installed
   package:
-    name: "{{ aws_cw_agent_dependencies }}"
+    name: "{{ amz_cwagent_dependencies }}"
     state: latest
   tags: aws_cw_agent
 
@@ -34,56 +34,56 @@
   register: home_dir
   tags: aws_cw_agent
 
-- set_fact: aws_cw_agent_pubkey_path="{{ home_dir.stdout }}/{{ aws_cw_agent_pubkey_url | basename }}"
+- set_fact: amz_cwagent_pubkey_path="{{ home_dir.stdout }}/{{ amz_cwagent_pubkey_url | basename }}"
   tags: aws_cw_agent
 
-- set_fact: aws_cw_agent_sig_path="{{ home_dir.stdout }}/{{ aws_cw_agent_sig_url | basename }}"
+- set_fact: amz_cwagent_sig_path="{{ home_dir.stdout }}/{{ amz_cwagent_sig_url | basename }}"
   tags: aws_cw_agent
 
-- set_fact: aws_cw_agent_pkg_path="{{ home_dir.stdout }}/{{ aws_cw_agent_pkg_url | basename }}"
+- set_fact: amz_cwagent_pkg_path="{{ home_dir.stdout }}/{{ amz_cwagent_pkg_url | basename }}"
   tags: aws_cw_agent
 
 - block:
     - name: AWS CloudWatch Agent | Download GPG pubkey
       get_url:
-        url: "{{ aws_cw_agent_pubkey_url }}"
-        dest: "{{ aws_cw_agent_pubkey_path }}"
+        url: "{{ amz_cwagent_pubkey_url }}"
+        dest: "{{ amz_cwagent_pubkey_path }}"
         force: yes
 
     - name: AWS CloudWatch Agent | Download signature file
       get_url:
-        url: "{{ aws_cw_agent_sig_url }}"
-        dest: "{{ aws_cw_agent_sig_path }}"
+        url: "{{ amz_cwagent_sig_url }}"
+        dest: "{{ amz_cwagent_sig_path }}"
         force: yes
 
     - name: AWS CloudWatch Agent | Download package file
       get_url:
-        url: "{{ aws_cw_agent_pkg_url }}"
-        dest: "{{ aws_cw_agent_pkg_path }}"
+        url: "{{ amz_cwagent_pkg_url }}"
+        dest: "{{ amz_cwagent_pkg_path }}"
         force: yes
 
     - name: AWS CloudWatch Agent | Import GPG pubkey
       command: >
-        gpg --no-greeting --no-auto-check-trustdb -q --batch --no-tty --import {{ aws_cw_agent_pubkey_path }}
-      register: aws_cw_agent_pubkey_import_check
+        gpg --no-greeting --no-auto-check-trustdb -q --batch --no-tty --import {{ amz_cwagent_pubkey_path }}
+      register: amz_cwagent_pubkey_import_check
       changed_when: no
-      failed_when: aws_cw_agent_pubkey_import_check.rc != 0
+      failed_when: amz_cwagent_pubkey_import_check.rc != 0
 
     - name: AWS CloudWatch Agent | Verify GPG pubkey
       shell: >
         gpg --with-colons --fingerprint "Amazon CloudWatch Agent" | awk -F":" '$1 == "fpr" {print $10;}'
       args:
         executable: /bin/bash
-      register: aws_cw_agent_pubkey_fingerprint_reported
+      register: amz_cwagent_pubkey_fingerprint_reported
       changed_when: no
-      failed_when: aws_cw_agent_pubkey_fingerprint_reported.stdout != aws_cw_agent_pubkey_fingerprint
+      failed_when: amz_cwagent_pubkey_fingerprint_reported.stdout != amz_cwagent_pubkey_fingerprint
 
     - name: AWS CloudWatch Agent | Verify package file
       command: >
-        gpg --no-greeting --no-auto-check-trustdb -q --batch --no-tty --verify {{ aws_cw_agent_sig_path }} {{ aws_cw_agent_pkg_path }}
-      register: aws_cw_agent_pkg_check
+        gpg --no-greeting --no-auto-check-trustdb -q --batch --no-tty --verify {{ amz_cwagent_sig_path }} {{ amz_cwagent_pkg_path }}
+      register: amz_cwagent_pkg_check
       changed_when: no
-      failed_when: aws_cw_agent_pkg_check.rc != 0
+      failed_when: amz_cwagent_pkg_check.rc != 0
 
     - name: AWS CloudWatch Agent | Install package
       include_tasks: "{{ ansible_distribution }}.yml"
@@ -94,9 +94,9 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "{{ aws_cw_agent_pubkey_path }}"
-        - "{{ aws_cw_agent_sig_path }}"
-        - "{{ aws_cw_agent_pkg_path }}"
+        - "{{ amz_cwagent_pubkey_path }}"
+        - "{{ amz_cwagent_sig_path }}"
+        - "{{ amz_cwagent_pkg_path }}"
       changed_when: no
       ignore_errors: yes
   tags: aws_cw_agent
