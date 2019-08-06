@@ -1,0 +1,6 @@
+---
+__aws_cw_agent_pkg_url: "https://s3.{{ aws_cw_agent_region }}.amazonaws.com/amazoncloudwatch-agent-{{ aws_cw_agent_region }}/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb"
+__aws_cw_agent_sig_url: "https://s3.{{ aws_cw_agent_region }}.amazonaws.com/amazoncloudwatch-agent-{{ aws_cw_agent_region }}/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb.sig"
+__aws_cw_agent_dependencies:
+  - gpg
+  - xz-utils
