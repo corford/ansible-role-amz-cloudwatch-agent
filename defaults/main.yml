@@ -1,4 +1,4 @@
 ---
-aws_cw_agent__pubkey_url: "https://s3.amazonaws.com/amazoncloudwatch-agent/assets/amazon-cloudwatch-agent.gpg"
+aws_cw_agent_pubkey_url: "https://s3.amazonaws.com/amazoncloudwatch-agent/assets/amazon-cloudwatch-agent.gpg"
 aws_cw_agent_pubkey_fingerprint: "937616F3450B7D806CBD9725D58167303B789C72"
 aws_cw_agent_region: "eu-west-1"
