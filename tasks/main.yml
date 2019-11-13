@@ -108,7 +108,7 @@
         group: "{{ amz_cwagent_run_as_group }}"
 
     - name: Amazon CloudWatch Agent | Activate base config
-      shell: "{{ amz_cwagent_ctl_bin }} -a fetch-config -m {{ amz_cwagent_mode }} -c file:{{ amz_cwagent_conf_path }}/amazon-cloudwatch-agent.json -s"
+      shell: "{{ amz_cwagent_ctl_bin }} -a {{ amz_cwagent_action }}-config -m {{ amz_cwagent_mode }} -c file:{{ amz_cwagent_conf_path }}/amazon-cloudwatch-agent.json -s"
       args:
         executable: /bin/bash
 
