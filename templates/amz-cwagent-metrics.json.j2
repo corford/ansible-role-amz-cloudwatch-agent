@@ -1,0 +1,57 @@
+  "metrics": {
+    "metrics_collected": {
+      "cpu": {
+        "resources": [
+          "*"
+        ],
+        "measurement": [
+          "usage_idle",
+          "usage_nice",
+          "usage_guest",
+          "usage_active",
+          "usage_system"
+        ]
+      },
+      "mem": {
+        "resources": [
+          "*"
+        ],
+        "measurement": [
+          "used",
+          "free",
+          "cached"
+        ]
+      },
+      "diskio": {
+        "resources": [
+          "*"
+        ],
+        "measurement": [
+          "reads",
+          "writes",
+          "read_bytes",
+          "write_bytes",
+          "iops_in_progress"
+        ]
+      },
+      "net": {
+        "resources": [
+          "*"
+        ],
+        "measurement": [
+          "bytes_sent",
+          "bytes_recv",
+          "err_in",
+          "err_out"
+        ]
+      },
+      "netstat": {
+        "measurement": [
+          "tcp_established",
+          "tcp_listen",
+          "tcp_close_wait",
+          "udp_socket"
+        ]
+      }
+    }
+  }

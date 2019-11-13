@@ -1,4 +1,16 @@
 ---
-amz_cwagent_pubkey_url: "https://s3.amazonaws.com/amazoncloudwatch-agent/assets/amazon-cloudwatch-agent.gpg"
-amz_cwagent_pubkey_fingerprint: "937616F3450B7D806CBD9725D58167303B789C72"
-amz_cwagent_region: "eu-west-1"
+amz_cwagent_pubkey_url: https://s3.amazonaws.com/amazoncloudwatch-agent/assets/amazon-cloudwatch-agent.gpg
+amz_cwagent_pubkey_fingerprint: 937616F3450B7D806CBD9725D58167303B789C72
+amz_cwagent_install_path: /opt/aws/amazon-cloudwatch-agent
+amz_cwagent_ctl_bin: "{{ amz_cwagent_install_path }}/bin/amazon-cloudwatch-agent-ctl"
+amz_cwagent_conf_path: "{{ amz_cwagent_install_path }}/etc"
+amz_cloudwatch_log_file: "/var/log/amazon-cloudwatch-agent.log"
+amz_cwagent_metrics_collection_interval_secs: 10
+amz_cwagent_run_as_group: cwagent
+amz_cwagent_run_as_user: cwagent
+amz_cwagent_region: us-east-1
+amz_cwagent_debug: "false"
+amz_cwagent_agent_template: "amz-cwagent-agent.json.j2"
+amz_cwagent_metrics_template: "amz-cwagent-metrics.json.j2"
+amz_cwagent_omit_hostname: "false"
+amz_cwagent_mode: "auto"
