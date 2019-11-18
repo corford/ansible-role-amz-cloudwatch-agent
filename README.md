@@ -1,6 +1,6 @@
-# Ansible Role: amz-cloudwatch-agent
+# Ansible Role: amz-cwagent
 
-Ansible role to download, install and run Amazon CloudWatch Agent.
+Ansible role to download, install and run the Amazon CloudWatch Agent.
 
 This role will initialise and start the agent with a simple file based config. You can overwrite this
 by pointing the `amz_cwagent_agent_template` and/or `amz_cwagent_metrics_template` variables to different templates.
